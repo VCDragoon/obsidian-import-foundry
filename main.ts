@@ -493,16 +493,11 @@ class FileSelectorModal extends Modal {
 	input4.textContent = "IMPORT";
 	
     input4.onclick = async () => {
-      const { files } = input1;
-	  const {filesActor} = inputActor;
+      const { files } = input1, { files: filesActor } = inputActor;
       if (!files.length) return;
 	  for (let i=0; i<files.length; i++) {
 		  await this.handler.call(this.caller, files[i], input2.value, input3.checked);
       }
-	  if (!filesActor.length) return;
-	  for (let i=0; i<filesActor.length; i++) {
-		  await this.handler.call(this.caller, filesActor[i], input2.value, input3.checked);
-	  }
 	  this.close();
     }
   }
