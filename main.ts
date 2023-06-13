@@ -464,6 +464,14 @@ class FileSelectorModal extends Modal {
         accept: ".db"
       }
     });
+
+	const settingActor = new Setting(this.contentEl).setName("Choose File").setDesc("Choose actors.db file to import");
+    const inputActor = settingActor.controlEl.createEl("input", {
+      attr: {
+        type: "file",
+        accept: ".db"
+      }
+    });
     const setting2 = new Setting(this.contentEl).setName("Parent Folder").setDesc("Enter the name of the Obsidian folder into which the data will be imported");
     const input2 = setting2.controlEl.createEl("input", {
       attr: {
@@ -486,10 +494,15 @@ class FileSelectorModal extends Modal {
 	
     input4.onclick = async () => {
       const { files } = input1;
+	  const {filesActor} = inputActor;
       if (!files.length) return;
 	  for (let i=0; i<files.length; i++) {
 		  await this.handler.call(this.caller, files[i], input2.value, input3.checked);
       }
+	  if (!filesActor.length) return;
+	  for (let i=0; i<filesActor.length; i++) {
+		  await this.handler.call(this.caller, filesActor[i], input2.value, input3.checked);
+	  }
 	  this.close();
     }
   }
